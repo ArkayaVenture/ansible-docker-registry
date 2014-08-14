@@ -6,14 +6,8 @@
     - "{{ubuntu_packages}}"
     - "{{common_packages}}" 
 
--   name: Create docker registry persistent storage
-    file: path={{ project_root }}/docker-registry-data state=directory
-  
 -   name: get docker-registry repo
     git: repo=https://github.com/dotcloud/docker-registry.git dest={{ project_root }}/docker-registry/
-
--   name: "write docker configuration in {{ project_root }}/docker-registry/config/"
-    template: src=config.yml.j2 dest={{ project_root }}/docker-registry/config/config.yml
 
 -   name: "write Dockerfile in {{ project_root }}/docker-registry/"
     template: src=Dockerfile.j2 dest={{ project_root }}/docker-registry/Dockerfile
