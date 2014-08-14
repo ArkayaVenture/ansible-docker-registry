@@ -15,6 +15,7 @@ As this is a completely self contained playbook delivering a working private doc
 following steps are required to get running:
 *  install docker according to the [following instructions](http://docs.docker.io/installation/#installation)
 *  run the playbook: ` ansible-playbook -i hosts site.yml`
+  
 That will use the
 [official image from the Docker index](https://index.docker.io/_/registry/).
 
