@@ -1,0 +1,8 @@
+[docker-registry-servers]
+dockerregistry1 ansible_ssh_host=137.58.70.157
+
+[docker-registry-servers:vars]
+
+ansible_ssh_user=esoutri
+
+ansible_ssh_private_key_file=~/.ssh/id_rsa

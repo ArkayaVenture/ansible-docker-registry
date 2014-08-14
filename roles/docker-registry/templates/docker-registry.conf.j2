@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+description "Upstart Script for {{ init_service_name }}"
+env NAME={{ init_service_name }}
+env USER=root
+start on (filesystem) and started docker
+stop on runlevel [016] or stopped docker
+
+respawn
+
+script
+	echo "exec docker run -d -P -t -i {{ docker_image_name }}"
+    exec docker run -d -P -t -i {{ docker_image_name }}
+end script

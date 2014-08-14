@@ -1,0 +1,21 @@
+---
+-   name: setting up base platform for hosting docker containers
+    apt: name={{ item }} state=installed
+    when: ansible_distribution == 'Ubuntu'
+    with_items:    
+    - "{{ubuntu_packages}}"
+    - "{{common_packages}}" 
+
+-   name: get docker-registry repo
+    git: repo=https://github.com/dotcloud/docker-registry.git dest={{ project_root }}/docker-registry/
+
+-   name: "write Dockerfile in {{ project_root }}/docker-registry/"
+    template: src=Dockerfile.j2 dest={{ project_root }}/docker-registry/Dockerfile
+    
+-   name: check or build image
+    docker_image: path="{{ project_root }}/docker-registry/" name="{{ docker_image_name }}" state=present
+         
+-   name: "write {{ init_service_name }} as init script"
+    template: src=docker-registry.conf.j2 dest=/etc/init/{{ init_service_name }}.conf
+    notify:
+        - restart {{ init_service_name }}

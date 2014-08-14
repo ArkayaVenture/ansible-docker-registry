@@ -1,0 +1,9 @@
+---
+# This playbook deploys a docker registry
+
+- hosts: docker-registry-servers
+  user: ansible
+  sudo: yes
+
+  roles:
+    - docker-registry

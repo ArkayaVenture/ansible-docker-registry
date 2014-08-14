@@ -1,0 +1,23 @@
+host: "{{inventory_hostname}}"
+
+common_packages:
+    -   git
+    -   python-pip
+    -   gcc
+
+ubuntu_packages:
+    -   python-selinux
+    -   python-dev
+    -   libevent-2.0-5
+    -   libevent-dev
+    -   python-openssl
+
+initfiles:
+    -   gunicorn
+
+project_name: docker-registry
+project_root: /opt
+http_proxy: http://www-proxy.ericsson.se:8080
+enable_ssh: true
+init_service_name: docker-registry
+docker_image_name: docker-registry/master    
