@@ -10,5 +10,5 @@ respawn limit 1 10
 
 script
 	echo "exec docker run -d -P -t -i {{ docker_image_name }}"
-    exec docker run -d -P -t -i {{ docker_image_name }}
+    exec docker run -v {{ project_root }}/docker-registry-data:/docker-registry-data -d -P -t -i {{ docker_image_name }}
 end script

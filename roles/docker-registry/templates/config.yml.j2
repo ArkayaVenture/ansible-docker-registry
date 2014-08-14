@@ -57,7 +57,7 @@ common: &common
 local: &local
     <<: *common
     storage: local
-    storage_path: _env:STORAGE_PATH:{{ project_root }}/docker-registry-data
+    storage_path: _env:STORAGE_PATH:/docker-registry-data
 
 # This is the default configuration when no flavor is specified
 dev: &dev
