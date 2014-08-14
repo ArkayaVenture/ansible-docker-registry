@@ -1,0 +1,4 @@
+---
+- hosts: docker-registry-servers
+  roles:
+  - { role: docker-registry }
