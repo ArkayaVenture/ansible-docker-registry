@@ -25,5 +25,22 @@ There are few known issues that I have observed while performing the tests. I in
  * Upstart configuration needs to be optimised to allow single thread of docker container is started. With the current configuration 8 docker registry docker containers gets started and are tied to random ports.
  * Everytime the service is restarted, the storage is not persisted. This is easily achievable using a persistent storage mechanism in Docker containers. 
 
+## Under the bonnet
+### Key components
+#### Docker Registry Upstart Configuration
+[docker-registry.conf.j2](roles/docker-registry/templates/docker-registry.conf.j2) is the templated Upstart configuration
+
+#### Dockerfile
+[Dockerfile.j2](roles/docker-registry/templates/Dockerfile.j2) is the templated Dockerfile that is replaced during the ansible runtime to build a docker container image called docker-registry/master. The playbook performs check using the docker_image tag to build an image only if there are changes in the code.
+
+#### Tasks
+Ansible tasks configuration are written in [main.yml](roles/docker-registry/tasks/main.yml)
+
+
+## Ideas/Features in development
+Following are few ideas/features that will be developed in due-course of time
+ * Adding apache and nginx configuration samples to perform url re-write on the docker host
+ * Adding support for RHEL/CentOS
+
 "WORK IN PROGRESS"
 ===============
