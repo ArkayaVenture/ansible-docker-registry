@@ -13,7 +13,7 @@ This role has been tested in an environment with the following components
  * Python v2.7
 
 Quick start
-===========
+===============
 
 As this is a completely self contained playbook delivering a working private docker registry using the default configurations,
 following steps are required to get running:
