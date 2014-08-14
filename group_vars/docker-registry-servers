@@ -17,7 +17,8 @@ initfiles:
 
 project_name: docker-registry
 project_root: /opt
-http_proxy: http://www-proxy.ericsson.se:8080
+# http_proxy: http://<username>:<password>@<proxy_host>:<proxy_port>
+http_proxy:
 enable_ssh: true
 init_service_name: docker-registry
 docker_image_name: docker-registry/master    
