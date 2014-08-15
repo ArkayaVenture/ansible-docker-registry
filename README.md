@@ -12,6 +12,7 @@ This role has been tested in an environment with the following components
 
 ## Note
 For the upstart configuration to work, the DOCKER_OPTS in /etc/default/docker should contain "-r=false"
+
 `DOCKER_OPTS="-r=false ..."`
 
 ## Quick start
