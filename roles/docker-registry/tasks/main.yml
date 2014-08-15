@@ -6,8 +6,14 @@
     - "{{ubuntu_packages}}"
     - "{{common_packages}}" 
 
+-   name: Create docker registry persistent storage
+    file: path={{ project_root }}/{{ docker_registry_data_dir }} state=directory
+  
 -   name: get docker-registry repo
     git: repo=https://github.com/dotcloud/docker-registry.git dest={{ project_root }}/docker-registry/
+
+-   name: "write docker configuration in {{ project_root }}/docker-registry/config/"
+    template: src=config.yml.j2 dest={{ project_root }}/docker-registry/config/config.yml
 
 -   name: "write Dockerfile in {{ project_root }}/docker-registry/"
     template: src=Dockerfile.j2 dest={{ project_root }}/docker-registry/Dockerfile
@@ -15,7 +21,31 @@
 -   name: check or build image
     docker_image: path="{{ project_root }}/docker-registry/" name="{{ docker_image_name }}" state=present
          
--   name: "write {{ init_service_name }} as init script"
+-   name: clearing {{ docker_image_name }} containers
+    docker: image="{{ docker_image_name }}"  state=absent
+    
+-   name: Display return codes from cleared containers
+    debug: msg="Returned {{inventory_hostname}}:{{item}}"
+    with_items: docker_containers       
+    
+-   name: run {{ docker_image_name }} containers
+    docker: image="{{ docker_image_name }}" ports="{{ docker_host_registry_port }}:5000" volumes="{{ project_root }}/{{ docker_registry_data_dir }}:/{{ docker_registry_data_dir }}" name="{{ init_service_name }}" state=running
+
+-   name: Display return codes from running containers
+    debug: msg="Returned {{inventory_hostname}}:{{item}}"
+    with_items: docker_containers       
+
+-   name: stop {{ docker_image_name }} containers
+    docker: image="{{ docker_image_name }}"  state=stopped
+    
+-   name: Display return codes from stopped containers
+    debug: msg="Returned {{inventory_hostname}}:{{item}}"
+    with_items: docker_containers       
+         
+-   name: "write {{ init_service_name }} default configuration in /etc/default/"
+    template: src=docker-registry.default.j2 dest=/etc/default/{{ init_service_name }}
+
+-   name: "write {{ init_service_name }} as init script in /etc/init/"
     template: src=docker-registry.conf.j2 dest=/etc/init/{{ init_service_name }}.conf
     notify:
-        - restart {{ init_service_name }}
+    - restart {{ init_service_name }}

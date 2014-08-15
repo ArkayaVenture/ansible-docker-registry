@@ -2,13 +2,18 @@
 description "Upstart Script for {{ init_service_name }}"
 env NAME={{ init_service_name }}
 env USER=root
-start on (filesystem) and started docker
-stop on runlevel [016] or stopped docker
-pid file /var/run/{{ init_service_name }}.pid
+start on (filesystems) and started docker
+stop on runlevel [!2345]
 
-respawn limit 1 10
+respawn
 
 script
-	echo "exec docker run -d -P -t -i {{ docker_image_name }}"
-    exec docker run -d -P -t -i {{ docker_image_name }}
+	# modify these in /etc/default/$UPSTART_JOB (/etc/default/docker-registry)
+	DOCKER=/usr/bin/docker
+	DOCKER_OPTS=
+	if [ -f /etc/default/$UPSTART_JOB ]; then
+		. /etc/default/$UPSTART_JOB
+	fi
+	echo "exec '$DOCKER' $DOCKER_REGISTRY_OPTS $UPSTART_JOB"
+	exec "$DOCKER" $DOCKER_REGISTRY_OPTS $UPSTART_JOB
 end script

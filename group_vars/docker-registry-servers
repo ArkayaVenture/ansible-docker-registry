@@ -12,9 +12,6 @@ ubuntu_packages:
     -   libevent-dev
     -   python-openssl
 
-initfiles:
-    -   gunicorn
-
 project_name: docker-registry
 project_root: /opt
 # http_proxy: http://<username>:<password>@<proxy_host>:<proxy_port>
@@ -22,3 +19,5 @@ http_proxy:
 enable_ssh: true
 init_service_name: docker-registry
 docker_image_name: docker-registry/master    
+docker_host_registry_port: 5000
+docker_registry_data_dir: docker-registry-data

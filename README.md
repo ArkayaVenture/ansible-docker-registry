@@ -5,10 +5,14 @@ Role is based upon docker registry [v0.8.0] (https://github.com/docker/docker-re
 
 ## Dependencies
 This role has been tested in an environment with the following components
- * Ubuntu v14.04
+ * Ubuntu v12.04 or above
  * Ansisble v1.7
  * Docker v1.1.1
  * Python v2.7
+
+## Note
+For the upstart configuration to work, the DOCKER_OPTS in /etc/default/docker should contain "-r=false"
+`DOCKER_OPTS="-r=false ..."`
 
 ## Quick start
 As this is a completely self contained playbook delivering a working private docker registry using the default configurations,
