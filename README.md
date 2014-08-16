@@ -1,4 +1,5 @@
 # Ansible-Docker-Registry
+[![Build Status](https://travis-ci.org/soumentrivedi/ansible-docker-registry.svg)](https://travis-ci.org/soumentrivedi/ansible-docker-registry)
 ## Description
 This is a simple playbook creating a docker-registry role to setup an independent private docker registry and configuring an upstart script on the docker host for starting up docker registry at boot time. 
 Role is based upon docker registry [v0.8.0] (https://github.com/docker/docker-registry/tree/0.8.0). 
